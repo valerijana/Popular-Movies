@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="pref_sort_key">sort</string>
+    <string name="pref_sort_label">Sort by</string>
+    <string name="pref_sort_default">popular</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="imageTagKey">imageId</string>
+    <string name="title_activity_details">Details</string>
+</resources>
