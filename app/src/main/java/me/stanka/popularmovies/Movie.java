@@ -14,12 +14,6 @@ public class Movie implements Parcelable{
     private String vote;
     private String release;
 
-    public Movie(String id, String poster_path){
-        this.id = id;
-        this.poster_path = poster_path;
-        title = overview = vote = release = "";
-    }
-
     public Movie(String id, String poster_path, String title, String overview, String vote, String release){
         this.id = id;
         this.poster_path = poster_path;

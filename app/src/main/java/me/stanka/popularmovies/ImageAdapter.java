@@ -1,6 +1,7 @@
 package me.stanka.popularmovies;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,18 +16,24 @@ import java.util.ArrayList;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> mMovies;
+    private LayoutInflater mLayoutInflater;
 
     public ImageAdapter(Context c) {
         mContext = c;
+        mLayoutInflater = LayoutInflater.from(c);
     }
 
     public void setMovies(ArrayList<Movie> movies){
-        this.movies = movies;
+        mMovies = movies;
+    }
+
+    static class ViewHolder {
+        private ImageView img;
     }
 
     public int getCount() {
-        return movies.size();
+        return mMovies.size();
     }
 
     public Object getItem(int position) {
@@ -39,19 +46,23 @@ public class ImageAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        ViewHolder holder;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            convertView = mLayoutInflater.inflate(R.layout.image_item, null);
+            holder = new ViewHolder();
+            holder.img = (ImageView) convertView.findViewById(R.id.image);
+            convertView.setTag(holder);
         } else {
-            imageView = (ImageView) convertView;
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        Picasso.with(mContext).load("https://image.tmdb.org/t/p/w185" + movies.get(position).getPoster_path()).into(imageView);
+        Picasso.with(mContext)
+                .load("https://image.tmdb.org/t/p/w185" + mMovies.get(position).getPoster_path())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
+                .into(holder.img);
 
-        return imageView;
+        return convertView;
     }
 
 }
